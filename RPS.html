@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function getComputerChoice(){
+            let n = (Math.random() * 1000) % 3;
+            n = Math.floor(n);
+            let comChoice = "";
+            switch(n){
+                case 0 :    comChoice = "Rock";
+                        break;
+
+                case 1 :    comChoice = "Paper";
+                        break;
+
+                default:    comChoice = "Scissors";
+            }
+            return comChoice;
+        }
+
+        let comChoice = getComputerChoice();
+        
+        function getHumanChoice(){
+            let humanChoice = prompt("Please choose Rock, Paper, or Scissors").toLowerCase();
+            while (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") {
+                humanChoice = prompt("Wrong Choice! Please choose Rock, Paper, or Scissors").toLowerCase();
+            }
+            return humanChoice;
+        }
+
+        let humChoice = getHumanChoice();
+
+        let humanScore = 0, comScore = 0;
+    </script>
+    
+</body>
+</html>
