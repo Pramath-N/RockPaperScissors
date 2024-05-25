@@ -31,9 +31,45 @@
             return humanChoice;
         }
 
-        let humanScore = 0, comScore = 0;
+        function playGame(){
+            let humanScore = 0, comScore = 0;
 
-        
+            function playRound(humanChoice, comChoice){
+
+                humanChoice = humanChoice.toLowerCase();
+                comChoice = comChoice.toLowerCase();
+
+                if(humanChoice == comChoice){
+                    return "It is a tie!";
+                }
+                if( humanChoice == "rock" && comChoice === "scissors" ||
+                    humanChoice == "paper" && comChoice === "rock" ||
+                    humanChoice === "scissors" && comChoice === "paper"
+                ){
+                    humanScore++;
+                    return "You Win! " + humanChoice + " beats " + comChoice;
+                }
+                if( humanChoice == "rock" && comChoice === "paper" ||
+                    humanChoice == "paper" && comChoice === "scissors" ||
+                    humanChoice === "scissors" && comChoice === "rock"
+                ){
+                    comScore++;
+                    return "You Loose! " + comChoice + " beats " + humanChoice;
+                }
+            }
+
+            for(let i = 0; i < 5; i++){
+                let humanChoice = getHumanChoice();
+                let comChoice = getComputerChoice();
+
+                let res = playRound(humanChoice, comChoice);
+                console.log(res);
+            }
+            console.log("The Final Score is : Human = " + humanScore + "  Computer = " + comScore);
+        }
+
+        playGame();
+
     </script>
     
 </body>
