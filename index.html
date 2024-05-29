@@ -1,76 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
+    <div id="container"></div>
     <script>
-        function getComputerChoice(){
+        let comScore = 0, humanScore = 0;
+        function getComputerChoice() {
             let n = (Math.random() * 1000) % 3;
             n = Math.floor(n);
             let comChoice = "";
-            switch(n){
-                case 0 :    comChoice = "Rock";
-                        break;
+            switch (n) {
+                case 0: comChoice = "Rock";
+                    break;
 
-                case 1 :    comChoice = "Paper";
-                        break;
+                case 1: comChoice = "Paper";
+                    break;
 
-                default:    comChoice = "Scissors";
+                default: comChoice = "Scissors";
             }
             return comChoice;
         }
+
+        function playRound(humanChoice, comChoice) {
+
+            humanChoice = humanChoice.toLowerCase();
+            comChoice = comChoice.toLowerCase();
+
+            if (humanChoice == comChoice) {
+                return "It is a tie!";
+            }
+            if (humanChoice == "rock" && comChoice === "scissors" ||
+                humanChoice == "paper" && comChoice === "rock" ||
+                humanChoice === "scissors" && comChoice === "paper"
+            ) {
+                humanScore++;
+                return "You Win! " + humanChoice + " beats " + comChoice;
+            }
+            if (humanChoice == "rock" && comChoice === "paper" ||
+                humanChoice == "paper" && comChoice === "scissors" ||
+                humanChoice === "scissors" && comChoice === "rock"
+            ) {
+                comScore++;
+                return "You Loose! " + comChoice + " beats " + humanChoice;
+            }
         
-        function getHumanChoice(){
-            let humanChoice = prompt("Please choose Rock, Paper, or Scissors").toLowerCase();
-            while (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") {
-                humanChoice = prompt("Wrong Choice! Please choose Rock, Paper, or Scissors").toLowerCase();
-            }
-            return humanChoice;
         }
 
-        function playGame(){
-            let humanScore = 0, comScore = 0;
+        const scoreTab = document.createElement("div");
+        scoreTab.textContent = `You => ${humanScore}` + '\xa0'.repeat(20)  + `Com => ${comScore}`;
+        scoreTab.style.backgroundColor = "black";
+        scoreTab.style.color = "cyan";
+        const rBtn = document.createElement("button");
+        const pBtn = document.createElement("button");
+        const sBtn = document.createElement("button");
+        rBtn.textContent = "ROCK";
+        pBtn.textContent = "PAPER";
+        sBtn.textContent = "SCISSORS";
+        const allBtns = document.createElement("div");
+        const container = document.querySelector("#container");
+        allBtns.style.display = "flex";
+        allBtns.style.margin = "auto";
 
-            function playRound(humanChoice, comChoice){
+        allBtns.style.margin = "16px 300px"
+        scoreTab.style.padding = "16px 300px"
 
-                humanChoice = humanChoice.toLowerCase();
-                comChoice = comChoice.toLowerCase();
+        container.appendChild(allBtns);
+        allBtns.appendChild(rBtn);
+        allBtns.appendChild(pBtn);
+        allBtns.appendChild(sBtn);
+        container.appendChild(scoreTab);
 
-                if(humanChoice == comChoice){
-                    return "It is a tie!";
-                }
-                if( humanChoice == "rock" && comChoice === "scissors" ||
-                    humanChoice == "paper" && comChoice === "rock" ||
-                    humanChoice === "scissors" && comChoice === "paper"
-                ){
-                    humanScore++;
-                    return "You Win! " + humanChoice + " beats " + comChoice;
-                }
-                if( humanChoice == "rock" && comChoice === "paper" ||
-                    humanChoice == "paper" && comChoice === "scissors" ||
-                    humanChoice === "scissors" && comChoice === "rock"
-                ){
-                    comScore++;
-                    return "You Loose! " + comChoice + " beats " + humanChoice;
-                }
-            }
-
-            for(let i = 0; i < 5; i++){
-                let humanChoice = getHumanChoice();
-                let comChoice = getComputerChoice();
-
-                let res = playRound(humanChoice, comChoice);
-                console.log(res);
-            }
-            console.log("The Final Score is : Human = " + humanScore + "  Computer = " + comScore);
+        function updateScore(){
+            scoreTab.textContent = `You => ${humanScore}` +'\xa0'.repeat(20) +`Com => ${comScore}`;
         }
 
-        playGame();
+        function clearAll(){
+            humanScore = 0, comScore = 0;
+            alert("Thank You for playing! \n you can paly again if you eant");
+            updateScore();
+            allBtns.focus();
+        }
+
+        rBtn.addEventListener("click", () => {
+            alert(playRound("rock", getComputerChoice()));
+            if(humanScore == 5) alert("You Win!");
+            else if(comScore == 5) alert("You Loose!");
+            updateScore();
+            if(humanScore == 5 || comScore == 5) clearAll();
+        });
+        pBtn.addEventListener("click", () => {
+            alert(playRound("paper", getComputerChoice()));
+            if(humanScore == 5) alert("You Win!");
+            else if(comScore == 5) alert("You Loose!");
+            updateScore();
+            if(humanScore == 5 || comScore == 5) clearAll();
+        });
+        sBtn.addEventListener("click", () => {
+            alert(playRound("scissors", getComputerChoice()));
+            if(humanScore == 5) alert("You Win!");
+            else if(comScore == 5) alert("You Loose!");
+            updateScore();
+            if(humanScore == 5 || comScore == 5) clearAll();
+        });
+
 
     </script>
-    
+    <style>
+        #container{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            margin: auto;
+        }
+
+    </style>
+
 </body>
+
 </html>
